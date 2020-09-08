@@ -2,13 +2,19 @@ body {
     height: 100%;
     /* display:flex; */
     font-family: 'Open Sans', sans-serif;
+    /* font-family:'raleway'; */
     color:#0D2451;
     background-color:#FFFFFF;
     justify-content:center;
     align-items:center;
     font-size: 16px;
-    white-space: pre-wrap;
+    /* white-space: pre-wrap; */
 }
+
+.content {
+    height: 100%;
+    min-height: 500px;
+  }
 
 
 button:focus {outline:0;}

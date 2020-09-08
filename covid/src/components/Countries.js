@@ -7,13 +7,13 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(({
 
     root: {
-        background: '#222',
+        background: '#ffff',
         borderRadius: 3,
         border: 0,
         color: 'white',
     },
     inputRoot: {
-        color: "#bbb",
+        color: "#0D2451",
         "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "black"
         },
@@ -25,7 +25,7 @@ const useStyles = makeStyles(({
         },
     },
     clearIndicator: {
-        color: "#070707"
+        color: "red"
     }
 }));
 
@@ -44,7 +44,8 @@ const Countries = ({ setCountry }) => {
             setGetCountries(await fetchCountries());
         }
         getCountries();
-    }, [setGetCountries])
+    },
+        [setGetCountries])
 
     const mapCountries = () => {
         let test = getCountries.map((country, i) => country)

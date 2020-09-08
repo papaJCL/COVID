@@ -15,7 +15,7 @@ function App() {
 
     const retrieveData = async () => {
       const newData = await getData();
-      console.log("data is ", newData)
+      // console.log("data is ", newData)
       setData(newData);
     }
     retrieveData();
@@ -23,7 +23,7 @@ function App() {
 
   const retrieveCountry = async (newCountry) => {
     const fetchedCountries = await getData(newCountry);
-    console.log('fetchedCountries is ', newCountry)
+    // console.log('fetchedCountries is ', newCountry)
 
     setData(fetchedCountries);
     setCountry(newCountry);
@@ -39,13 +39,16 @@ function App() {
 
 
   return (
-      <Container>  
+    <div>
+      <Container>
         <h4 >{changeCountryString()}</h4>
         <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
         <Countries setCountry={retrieveCountry} />
         <CardData data={data} />
         <Graph data={data} country={country} />
       </Container>
+
+    </div>
   );
 }
 
