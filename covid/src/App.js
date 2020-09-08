@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container , Jumbotron } from 'react-bootstrap';
+import { Container } from 'reactstrap';
 import { getData } from './api'
+import Countries from './components/Countries'
+import CardData from './components/CardData'
+import Graph from './components/Graph'
+import './app.css'
 
 function App() {
 
@@ -9,7 +13,7 @@ function App() {
 
   useEffect(() => {
 
-    async function retrieveData() {
+    const retrieveData = async () => {
       const newData = await getData();
       console.log("data is ", newData)
       setData(newData);
@@ -19,6 +23,7 @@ function App() {
 
   const retrieveCountry = async (newCountry) => {
     const fetchedCountries = await getData(newCountry);
+    console.log('fetchedCountries is ', newCountry)
 
     setData(fetchedCountries);
     setCountry(newCountry);
@@ -34,16 +39,13 @@ function App() {
 
 
   return (
-    <div>
-      <Jumbotron/>
-      <Container>
+      <Container>  
         <h4 >{changeCountryString()}</h4>
-  <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
-        {/* <Countries setCountry={this.setCountry} />
-        <Cards data={this.state.data} />
-        <Chart data={this.state.data} country={this.state.country} /> */}
+        <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
+        <Countries setCountry={retrieveCountry} />
+        <CardData data={data} />
+        <Graph data={data} country={country} />
       </Container>
-    </div>
   );
 }
 
