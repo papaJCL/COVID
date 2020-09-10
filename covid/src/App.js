@@ -30,7 +30,7 @@ function App() {
   }
 
   const changeCountryString = () => {
-    if (country.length == 0)
+    if (country.length === 0)
       return ("GLOBAL STATS");
     else
       return (country.toUpperCase() + " STATS")
@@ -44,8 +44,10 @@ function App() {
         <h4 >{changeCountryString()}</h4>
         <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
         <Countries setCountry={retrieveCountry} />
+        <br/>
         <CardData data={data} />
-        <Graph data={data} country={country} />
+        <br/>
+       <Graph data={data} country={country} />
       </Container>
 
     </div>

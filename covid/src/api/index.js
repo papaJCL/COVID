@@ -8,7 +8,7 @@ export const getData = async (country) => {
 
     let changeURL = url;
 
-    if (country && country!="global" ){
+    if (country && country!=="global" ){
         changeURL = `${url}/countries/${country}`
     }
 
