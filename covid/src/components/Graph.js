@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDaily } from '../api';
-
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Sector, Cell, Brush, Text
 } from 'recharts';
+import { Typography } from '@material-ui/core';
+import 'fontsource-roboto';
+
 
 
 const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) => {
@@ -85,7 +87,7 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
                     <XAxis dataKey="date" height={90} tick={<CustomizedAxisTick />} />
                     <YAxis  tickFormatter={tick => { return tick.toLocaleString(); }} />
                     <Tooltip formatter={(value) => new Intl.NumberFormat('en').format(value)} />
-                    <Legend verticalAlign="top" height={36} />
+                    <Legend verticalAlign="bottom" height={36} />
                     <Brush dataKey="name" height={30} stroke="green" />
                     <Line dot={false} type="monotone" dataKey="confirmed" stroke="#0066ff" />
                     <Line dot={false} type="monotone" dataKey="deaths" stroke="#ff3300" />
@@ -97,9 +99,9 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
     const renderPieChart = (
 
         daily.length ? (
-            <ResponsiveContainer width="99%" height={400} key="makeid()">
+            <ResponsiveContainer width="100%" height={400} key="makeid()">
                 <PieChart>
-                    <Legend layout="horizontal" verticalAlign="top" align="center" />
+                    <Legend layout="horizontal" verticalAlign="bottom" align="center" />
                     <Pie
                         data={[
                             { name: 'Deaths', value: deaths.value },
@@ -131,8 +133,14 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
         <div>
             {country ? (
                 <div>
+                    <Typography variant="h2" align="center"  color="#e0e0e0" gutterBottom>
+                        Pie Chart
+                    </Typography>
                     {renderPieChart}
-                    <h1> {country} has {(deaths.value / totalDeathsToday()).toFixed(4) * 100}% of all of COVID related dealths</h1>
+                    <br/>
+                     <Typography variant="overline" align="center" component="h2" color="#e0e0e0" gutterBottom>
+                        {country.charAt(0).toUpperCase() + country.slice(1)} has {(deaths.value / totalDeathsToday()).toFixed(4) * 100}% of all of COVID related dealths
+                    </Typography>
                 </div>
 
             )

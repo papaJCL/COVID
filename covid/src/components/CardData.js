@@ -10,7 +10,6 @@ const useStyles = makeStyles({
         minWidth: 275,
         boxShadow: '0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2)',
         paddingTop: '5px',
-       
     },
     bullet: {
         display: 'inline-block',

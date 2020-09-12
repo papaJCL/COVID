@@ -5,7 +5,7 @@ body {
     /* font-family:'raleway'; */
     color:rgba(0, 0, 0, 0.938);
     /* background-color: #23272a; */
-    background-color: #ffffff;
+    background-color: #fafafa;
     justify-content:center;
     /* align-items:center; */
     font-size: 16px;
@@ -29,6 +29,12 @@ text{
 
 .add-shadow{
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+}
+
+.add-box{
+  background-color: #ffffff;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
 

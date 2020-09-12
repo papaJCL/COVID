@@ -5,6 +5,8 @@ import Countries from './components/Countries'
 import CardData from './components/CardData'
 import Graph from './components/Graph'
 import './app.css'
+import { Typography } from '@material-ui/core';
+import 'fontsource-roboto';
 
 function App() {
 
@@ -41,15 +43,16 @@ function App() {
   return (
     <div>
       <Container>
-        <h4 >{changeCountryString()}</h4>
+         <Typography align="center" variant="h3" color="#e0e0e0" gutterBottom>
+            {changeCountryString()}
+        </Typography>
         <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
-        <Countries setCountry={retrieveCountry} />
-        <br/>
         <CardData data={data} />
         <br/>
+        <Countries setCountry={retrieveCountry} />
+        </Container>
+        <br/>
        <Graph data={data} country={country} />
-      </Container>
-
     </div>
   );
 }
