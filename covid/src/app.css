@@ -37,6 +37,53 @@ text{
   margin-left: 25px;
 }
 
+/*.deaths{
+  border-bottom: 10px solid #d88884;
+}
+
+.confirmed{
+  border-bottom: 10px solid #84d4d8;
+}
+
+.recovered{
+  border-bottom: 10px solid #84d888;
+}*/
+
+.deaths {
+  background-color: #d88884;
+  
+  animation-name: progressBar;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+}
+
+.confirmed{
+  background-color: #84d4d8;
+  
+  animation-name: progressBar;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+}
+
+.recovered{
+  background-color: #84d888;
+  
+  animation-name: progressBar;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+}
+
+
+@keyframes progressBar {
+  0% {
+    width: 5%;
+  }
+  
+  100% {
+    width: 100%;
+  }
+}
+
 
 
 

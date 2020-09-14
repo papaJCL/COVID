@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchCountries } from '../api'
-import { TextField } from '@material-ui/core';
+import { TextField , Paper} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,6 +26,10 @@ const useStyles = makeStyles(({
     },
     clearIndicator: {
         color: "red"
+    },
+    paperWidth: {
+        marginLeft: '15px',
+        marginRight: '15px',
     }
 }));
 
@@ -68,21 +72,23 @@ const Countries = ({ setCountry }) => {
 
     return (
         <div >
-            {mapCountries()}
-            <Autocomplete
-                onChange={handleChange}
-                classes={classes}
-                options={countries}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) =>
-                    <TextField
-                        {...params}
-                        placeholder="Search for a Country or Click One Below"
-                        variant="outlined"
-                        fullWidth
-                    />
-                }
-            />
+            <Paper className={classes.paperWidth} elevation={3}>
+                {mapCountries()}
+                <Autocomplete
+                    onChange={handleChange}
+                    classes={classes}
+                    options={countries}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) =>
+                        <TextField
+                            {...params}
+                            placeholder="Search for a Country or Click One Below"
+                            variant="outlined"
+                            fullWidth
+                        />
+                    }
+                />
+            </Paper>
         </div>
     )
 

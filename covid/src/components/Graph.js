@@ -3,12 +3,26 @@ import { fetchDaily } from '../api';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Sector, Cell, Brush, Text
 } from 'recharts';
-import { Typography } from '@material-ui/core';
+import { Typography , Paper } from '@material-ui/core';
+import {makeStyles} from "@material-ui/core/styles"
 import 'fontsource-roboto';
+import { Container } from 'reactstrap';
+
+const useStyles = makeStyles(() => ({
+  paperPadding: {
+    marginBottom: '10px',
+    marginLeft: '15px',
+    marginRight: '15px',
+  },
+}))
 
 
 
-const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) => {
+
+
+const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
+
+    const classes = useStyles()
 
     const [daily, setDaily] = useState([]);
 
@@ -16,13 +30,12 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
 
     const RADIAN = Math.PI / 180;
 
-    const PRIMARYCOLORS = ['#ff3300', '#0066ff', '#00b300'];
+    const PRIMARYCOLORS = ['#d88884', '#84d4d8', '#84d888'];
 
     useEffect(() => {
         const getAPI = async () => {
             setDaily(await fetchDaily());
         }
-
         getAPI();
     }, []);
 
@@ -81,18 +94,23 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
 
     const renderLineChart = (
         daily.length ? (
-            <ResponsiveContainer width="99%" height={700}>
+            <Paper className={classes.paperPadding}>
+            <Typography variant="h2" align="center" color="textSecondary" gutterBottom>
+                        GLOBAL STATISTICS
+                    </Typography>
+            <ResponsiveContainer width="100%" height={700}>
                 <LineChart data={data} margin={{ top: 5, right: 40, left: 45, bottom: 5, }} >
                     <CartesianGrid strokeDasharray="3 3"  />
                     <XAxis dataKey="date" height={90} tick={<CustomizedAxisTick />} />
                     <YAxis  tickFormatter={tick => { return tick.toLocaleString(); }} />
                     <Tooltip formatter={(value) => new Intl.NumberFormat('en').format(value)} />
                     <Legend verticalAlign="bottom" height={36} />
-                    <Brush dataKey="name" height={30} stroke="green" />
-                    <Line dot={false} type="monotone" dataKey="confirmed" stroke="#0066ff" />
-                    <Line dot={false} type="monotone" dataKey="deaths" stroke="#ff3300" />
+                    <Brush dataKey="name" height={30} verticalAlign="bottom" stroke="green" />
+                    <Line dot={false} type="monotone" dataKey="confirmed" stroke="#84d4d8" />
+                    <Line dot={false} type="monotone" dataKey="deaths" stroke="#d88884" />
                 </LineChart>
             </ResponsiveContainer>
+            </Paper>
         ) : null
     );
 
@@ -133,21 +151,23 @@ const Graph = React.memo(({ data: { confirmed, recovered, deaths }, country }) =
         <div>
             {country ? (
                 <div>
-                    <Typography variant="h2" align="center"  color="#e0e0e0" gutterBottom>
-                        Pie Chart
+                    <Paper className={classes.paperPadding}> 
+                    <Typography align="center" variant="h2" color="textSecondary" gutterBottom>
+                        {country.toUpperCase()}
                     </Typography>
                     {renderPieChart}
                     <br/>
                      <Typography variant="overline" align="center" component="h2" color="#e0e0e0" gutterBottom>
                         {country.charAt(0).toUpperCase() + country.slice(1)} has {(deaths.value / totalDeathsToday()).toFixed(4) * 100}% of all of COVID related dealths
                     </Typography>
+                    </Paper>
                 </div>
 
             )
                 : renderLineChart}
         </div>
     )
-});
+};
 
 export default Graph;
 

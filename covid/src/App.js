@@ -42,15 +42,10 @@ function App() {
 
   return (
     <div>
-      <Container>
-         <Typography align="center" variant="h3" color="#e0e0e0" gutterBottom>
-            {changeCountryString()}
-        </Typography>
-        <p ><i>Last update:  </i>{new Date(data.lastUpdate).toDateString()} </p>
+      <Countries setCountry={retrieveCountry} />
+        <Container>
         <CardData data={data} />
-        <br/>
-        <Countries setCountry={retrieveCountry} />
-        </Container>
+      </Container>
         <br/>
        <Graph data={data} country={country} />
     </div>
