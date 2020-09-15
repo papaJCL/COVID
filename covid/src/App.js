@@ -42,10 +42,12 @@ function App() {
 
   return (
     <div>
+       <Typography align="center" variant="h2" color="textSecondary" gutterBottom>
+        COVID
+      </Typography>
       <Countries setCountry={retrieveCountry} />
-        <Container>
+      <br/>
         <CardData data={data} />
-      </Container>
         <br/>
        <Graph data={data} country={country} />
     </div>

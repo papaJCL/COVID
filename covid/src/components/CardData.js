@@ -19,8 +19,9 @@ const useStyles = makeStyles({
     title: {
         fontSize: 14,
     },
-    pos: {
-        marginBottom: 12,
+    cardContainer: {
+        marginLeft: '15px',
+        marginRight: '15px',
     },
 });
 
@@ -30,16 +31,17 @@ const CardData = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 
     const renderCard = (text, value , color) => {
         return (
-            <Card className={classes.root}>
-                <CardContent className={color}/>
-                <CardContent>
+            <Card justifyContent="center" className={classes.root}>
+                <CardContent className={color}>
+                    <Typography color="textSecondary" gutterBottom variant="h5">
                     {text}
-                </CardContent>
-                <CardContent>
+                    </Typography>
+                    <Typography  variant="h5" component="h2" gutterBottom>
                     <CountUp start={0} end={value} duration={1.5} separator="," />
-                </CardContent>
-                <CardContent>
+                    </Typography>
+                    <Typography color="textSecondary" gutterBottom >
                     {new Date(lastUpdate).toDateString()}
+                    </Typography>
                 </CardContent>
             </Card>
         )
@@ -48,17 +50,19 @@ const CardData = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 
     if (!confirmed) { return 'Loading...' }
     return (
-        <Grid container spacing={1}  justify='center'>
-            <Grid item md={3}>
+        <div className="cardContainer cardGrid">
+        <Grid container spacing={3}  justify='center'>
+            <Grid item xs={12} md={4}>
             {renderCard("CONFIRMED CASES" , confirmed.value , "confirmed")}
             </Grid>
-            <Grid item md={3}>
+            <Grid item xs={12} md={4}>
             {renderCard("DEATHS" , deaths.value, "deaths")}
             </Grid>
-            <Grid item md={3}>
+            <Grid item xs={12} md={4}>
             {renderCard("RECOVERED" , recovered.value, "recovered")}
             </Grid>
         </Grid>
+        </div>
     )
 }
 

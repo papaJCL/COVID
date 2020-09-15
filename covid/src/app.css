@@ -37,46 +37,44 @@ text{
   margin-left: 25px;
 }
 
-/*.deaths{
-  border-bottom: 10px solid #d88884;
-}
 
-.confirmed{
-  border-bottom: 10px solid #84d4d8;
-}
-
-.recovered{
-  border-bottom: 10px solid #84d888;
-}*/
 
 .deaths {
-  background-color: #d88884;
-  
+  border-top: 30px solid #d88884;
   animation-name: progressBar;
   animation-iteration-count: 1;
   animation-duration: 2s;
 }
 
 .confirmed{
-  background-color: #84d4d8;
-  
+  border-top: 30px solid #84d4d8;
   animation-name: progressBar;
   animation-iteration-count: 1;
   animation-duration: 2s;
 }
 
 .recovered{
-  background-color: #84d888;
-  
+  border-top: 30px solid #84d888;
   animation-name: progressBar;
   animation-iteration-count: 1;
   animation-duration: 2s;
+}
+
+.cardContainer{
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.cardGrid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 @keyframes progressBar {
   0% {
-    width: 5%;
+    width: 0%;
   }
   
   100% {
