@@ -43,7 +43,7 @@ function App() {
   return (
     <div>
        <Typography align="center" variant="h2" color="textSecondary" gutterBottom>
-        COVID
+        COVID-19 TRACKER
       </Typography>
       <Countries setCountry={retrieveCountry} />
       <br/>

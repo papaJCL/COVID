@@ -1,14 +1,25 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import React from 'react';
-import { Card, CardContent, Typography, Grid , CardActions } from '@material-ui/core';
+import { Card, CardContent, Typography, Grid, CardActions } from '@material-ui/core';
 import CountUp from 'react-countup';
 
 
-
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#d88884',
+        },
+        secondary: {
+            main: '#d88884',
+        },
+        error: {
+            main: '#d88884',
+        }
+    },
+});
 
 const useStyles = makeStyles({
     root: {
-        boxShadow: '0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2)',
         marginTop: '5px',
     },
     bullet: {
@@ -29,18 +40,18 @@ const CardData = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 
     const classes = useStyles();
 
-    const renderCard = (text, value , color) => {
+    const renderCard = (text, value, color, textColor) => {
         return (
             <Card justifyContent="center" className={classes.root}>
                 <CardContent className={color}>
                     <Typography color="textSecondary" gutterBottom variant="h5">
-                    {text}
+                        {text}
                     </Typography>
-                    <Typography  variant="h5" component="h2" gutterBottom>
-                    <CountUp start={0} end={value} duration={1.5} separator="," />
+                    <Typography color={textColor} variant="h5" gutterBottom>
+                        <CountUp prefix="+" start={0} end={value} duration={1.5} separator="," />
                     </Typography>
                     <Typography color="textSecondary" gutterBottom >
-                    {new Date(lastUpdate).toDateString()}
+                        {new Date(lastUpdate).toDateString()}
                     </Typography>
                 </CardContent>
             </Card>
@@ -51,17 +62,19 @@ const CardData = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
     if (!confirmed) { return 'Loading...' }
     return (
         <div className="cardContainer cardGrid">
-        <Grid container spacing={3}  justify='center'>
-            <Grid item xs={12} md={4}>
-            {renderCard("CONFIRMED CASES" , confirmed.value , "confirmed")}
-            </Grid>
-            <Grid item xs={12} md={4}>
-            {renderCard("DEATHS" , deaths.value, "deaths")}
-            </Grid>
-            <Grid item xs={12} md={4}>
-            {renderCard("RECOVERED" , recovered.value, "recovered")}
-            </Grid>
-        </Grid>
+            <ThemeProvider theme={theme}>
+                <Grid container spacing={3} justify='center'>
+                    <Grid item xs={12} md={4}>
+                        {renderCard("Confirmed Cases", confirmed.value, "confirmed", "primary")}
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        {renderCard("Deaths", deaths.value, "deaths", "secondary")}
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        {renderCard("Recovered", recovered.value, "recovered", "error")}
+                    </Grid>
+                </Grid>
+            </ThemeProvider>
         </div>
     )
 }

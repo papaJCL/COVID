@@ -3,17 +3,24 @@ import { fetchDaily } from '../api';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Sector, Cell, Brush, Text
 } from 'recharts';
-import { Typography, Paper } from '@material-ui/core';
+import { Typography, Paper, ButtonGroup, Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles"
 import 'fontsource-roboto';
-import { Container } from 'reactstrap';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     paperPadding: {
         marginBottom: '10px',
         marginLeft: '15px',
         marginRight: '15px',
     },
+    buttonAlignment: {
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center',
+        marginBottom: "25px",
+    }
 }))
 
 
@@ -26,6 +33,10 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
 
     const [daily, setDaily] = useState([]);
 
+    const [modifiedDaily, setModifiedDaily] = useState([])
+
+    const [alignment, setAlignment] = useState('right');
+
     const [isAnimation, setIsAnimation] = useState(true);
 
     const RADIAN = Math.PI / 180;
@@ -35,6 +46,7 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
     useEffect(() => {
         const getAPI = async () => {
             setDaily(await fetchDaily());
+            setModifiedDaily(await fetchDaily());
         }
         getAPI();
     }, []);
@@ -55,10 +67,9 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
 
 
     // -------------------------------------------------------------------------------------------------------------
-    const data = daily.map(({ date, confirmed, deaths }) => ({
+    const data = modifiedDaily.map(({ date, confirmed, deaths }) => ({
         'date': (date), 'confirmed': confirmed, 'deaths': deaths
-    })
-    )
+    }))
 
     const totalDeathsToday = () => {
         if (daily.length == 0)
@@ -73,7 +84,7 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
 
         return (
             <g transform={`translate(${x},${y})`}>
-                <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">{payload.value}</text>
+                <text x={0} y={0} dy={16} textAnchor="end" fill="#666" >{payload.value.substring(5)}</text>
             </g>
         );
     }
@@ -90,27 +101,63 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
         );
     };
 
+    const handleClick = (slicedNum) => {
+        if (slicedNum) {
+            let newDaily = daily.slice(-slicedNum)
+            setModifiedDaily(newDaily);
+        }
+        else {
+            setModifiedDaily(daily);
+        }
+    }
 
+
+
+    const handleAlignment = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
 
     const renderLineChart = (
+
         daily.length ? (
-            <Paper className={classes.paperPadding}>
-                <Typography variant="h4" align="center" color="textSecondary" gutterBottom>
-                    GLOBAL STATISTICS  <button >HI</button>
-                    </Typography>
-                <ResponsiveContainer width="100%" height={550}>
-                    <LineChart data={data} margin={{ top: 5, right: 40, left: 45, bottom: 5, }} >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" height={90} tick={<CustomizedAxisTick />} />
-                        <YAxis tickFormatter={tick => { return tick.toLocaleString(); }} />
-                        <Tooltip formatter={(value) => new Intl.NumberFormat('en').format(value)} />
-                        <Legend verticalAlign="bottom" height={36} />
-                        {/* <Brush dataKey="name" height={30} verticalAlign="bottom" stroke="green" /> */}
-                        <Line dot={false} type="monotone" dataKey="confirmed" stroke="#84d4d8" />
-                        <Line dot={false} type="monotone" dataKey="deaths" stroke="#d88884" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Paper>
+            <div>
+                <Paper className={classes.paperPadding}>
+                    <Typography variant="h5" align="center" color="textSecondary" gutterBottom>
+                    COVID-19 Daily Reports
+                </Typography>
+                    <ToggleButtonGroup
+                        value={alignment}
+                        exclusive
+                        onChange={handleAlignment}
+                        className={classes.buttonAlignment}
+                        size="small"
+                    >
+                        <ToggleButton value="leftleft" onClick={() => handleClick(5)}>
+                            5D
+                    </ToggleButton >
+                        <ToggleButton value="left" onClick={() => handleClick(30)}>
+                            1M
+                    </ToggleButton >
+                        <ToggleButton value="center" onClick={() => handleClick(180)}>
+                            6M
+                    </ToggleButton >
+                        <ToggleButton value="right" onClick={() => handleClick()}>
+                            YTD
+                    </ToggleButton >
+                    </ToggleButtonGroup>
+                    <ResponsiveContainer width="100%" height={500}>
+                        <LineChart data={data} margin={{ top: 5, right: 40, left: 45, bottom: 5, }} >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" height={90} tick={<CustomizedAxisTick />} />
+                            <YAxis tickFormatter={tick => { return tick.toLocaleString(); }} />
+                            <Tooltip formatter={(value) => new Intl.NumberFormat('en').format(value)} />
+                            <Legend verticalAlign="bottom" height={36} />
+                            <Line dot={false} type="monotone" dataKey="confirmed" stroke="#84d4d8" />
+                            <Line dot={false} type="monotone" dataKey="deaths" stroke="#d88884" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </Paper>
+            </div>
         ) : null
     );
 
