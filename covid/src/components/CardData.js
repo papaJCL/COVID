@@ -7,13 +7,13 @@ import CountUp from 'react-countup';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#d88884',
+            main: '#84d4d8',
         },
         secondary: {
             main: '#d88884',
         },
         error: {
-            main: '#d88884',
+            main: '#84d888',
         }
     },
 });

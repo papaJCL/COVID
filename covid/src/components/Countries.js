@@ -13,15 +13,15 @@ const useStyles = makeStyles(({
         color: 'white',
     },
     inputRoot: {
-        color: "#0D2451",
+        color: "black",
         "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "black"
+            borderColor: "grey"
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "black"
+            borderColor: "grey"
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#222"
+            borderColor: "grey"
         },
     },
     clearIndicator: {
@@ -72,7 +72,7 @@ const Countries = ({ setCountry }) => {
 
     return (
         <div >
-            <Paper className={classes.paperWidth} elevation={3}>
+            <Paper className={classes.paperWidth} elevation={0}>
                 {mapCountries()}
                 <Autocomplete
                     onChange={handleChange}

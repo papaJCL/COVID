@@ -4,6 +4,7 @@ import { getData } from './api'
 import Countries from './components/Countries'
 import CardData from './components/CardData'
 import Graph from './components/Graph'
+import Header from './components/Header'
 import './app.css'
 import { Typography } from '@material-ui/core';
 import 'fontsource-roboto';
@@ -42,14 +43,13 @@ function App() {
 
   return (
     <div>
-       <Typography align="center" variant="h2" color="textSecondary" gutterBottom>
-        COVID-19 TRACKER
-      </Typography>
+      <Header />
+      <br/><br/><br/><br/>
       <Countries setCountry={retrieveCountry} />
-      <br/>
-        <CardData data={data} />
-        <br/>
-       <Graph data={data} country={country} />
+      <br />
+      <CardData data={data} />
+      <br />
+      <Graph data={data} country={country} />
     </div>
   );
 }

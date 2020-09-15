@@ -123,7 +123,7 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
             <div>
                 <Paper className={classes.paperPadding}>
                     <Typography variant="h5" align="center" color="textSecondary" gutterBottom>
-                    COVID-19 Daily Reports
+                        COVID-19 Daily Reports
                 </Typography>
                     <ToggleButtonGroup
                         value={alignment}
@@ -134,13 +134,13 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
                     >
                         <ToggleButton value="leftleft" onClick={() => handleClick(5)}>
                             5D
-                    </ToggleButton >
+                        </ToggleButton >
                         <ToggleButton value="left" onClick={() => handleClick(30)}>
                             1M
-                    </ToggleButton >
+                        </ToggleButton >
                         <ToggleButton value="center" onClick={() => handleClick(180)}>
                             6M
-                    </ToggleButton >
+                        </ToggleButton >
                         <ToggleButton value="right" onClick={() => handleClick()}>
                             YTD
                     </ToggleButton >
