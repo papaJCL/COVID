@@ -35,15 +35,11 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
 
     const [modifiedDaily, setModifiedDaily] = useState([])
 
-
-
     const [alignment, setAlignment] = useState('right');
 
     const [isAnimation, setIsAnimation] = useState(true);
 
     const RADIAN = Math.PI / 180;
-
-    const PRIMARYCOLORS = ['#d88884', '#84d4d8', '#84d888'];
 
     useEffect(() => {
         const getAPI = async () => {
@@ -80,12 +76,6 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
         'date': (date), 'confirmed': confirmed, 'deaths': deaths
     }))
 
-    // const totalDeathsToday = () => {
-    //     if (daily.length == 0)
-    //         return;
-    //     else
-    //         return (daily[daily.length - 1].deaths)
-    // }
 
     const CustomizedAxisTick = (props) => {
 
@@ -177,23 +167,24 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
             <p> The API <i>https://covid19.mathdro.id/api/daily </i>   
             is <a href="https://covid19.mathdro.id/api/daily">currently down</a>
             </p>
-            <p> The Pie Charts and Line Graph won't render untill it's back up</p>
+            <p> Line Chart won't render untill it's back up</p>
             </center>
             </div>
         )
     }
 
+
     const renderPieChart = (
 
-        daily.length ? (
+        confirmed ? (
             <ResponsiveContainer width="100%" height={400} key="makeid()">
                 <PieChart>
                     <Legend layout="horizontal" verticalAlign="bottom" align="center" />
                     <Pie
                         data={[
-                            { name: 'Deaths', value: deaths.value },
-                            { name: 'Confirmed', value: confirmed.value },
-                            { name: 'Recovered ', value: recovered.value }
+                            { name: 'Deaths', value: deaths.value, fill: '#d88884' },
+                            { name: 'Infected', value: confirmed.value, fill: '#84d4d8' },
+                            { name: 'Recovered ', value: recovered.value, fill: '#84d888' }
                         ]}
 
                         stroke="none"
@@ -204,11 +195,8 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
                         outerRadius={150}
                         labelLine={false}
                         fill="#8884d8"
+                        dataKey="value"
                     >
-
-                        {
-                            data.map((entry, index) => <Cell fill={PRIMARYCOLORS[index % PRIMARYCOLORS.length]} />)
-                        }
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>
