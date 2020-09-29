@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDaily } from '../api';
+import { fetchDaily, getData } from '../api';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Sector, Cell, Brush, Text
 } from 'recharts';
@@ -27,13 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
+const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }) => {
 
     const classes = useStyles()
 
     const [daily, setDaily] = useState([]);
 
     const [modifiedDaily, setModifiedDaily] = useState([])
+
+
 
     const [alignment, setAlignment] = useState('right');
 
@@ -45,8 +47,15 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
 
     useEffect(() => {
         const getAPI = async () => {
-            setDaily(await fetchDaily());
-            setModifiedDaily(await fetchDaily());
+            const initialDayData = await fetchDaily();
+
+            setDaily(initialDayData);
+
+
+            //This fixes the break if a 502 error pops up
+            if (daily.length != 0)
+                setModifiedDaily(initialDayData);
+            
         }
         getAPI();
     }, []);
@@ -71,12 +80,12 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
         'date': (date), 'confirmed': confirmed, 'deaths': deaths
     }))
 
-    const totalDeathsToday = () => {
-        if (daily.length == 0)
-            return;
-        else
-            return (daily[daily.length - 1].deaths)
-    }
+    // const totalDeathsToday = () => {
+    //     if (daily.length == 0)
+    //         return;
+    //     else
+    //         return (daily[daily.length - 1].deaths)
+    // }
 
     const CustomizedAxisTick = (props) => {
 
@@ -158,8 +167,21 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
                     </ResponsiveContainer>
                 </Paper>
             </div>
-        ) : null
+        ) : render502error()
     );
+
+    function render502error(){
+        return(
+            <div>
+            <center>
+            <p> The API <i>https://covid19.mathdro.id/api/daily </i>   
+            is <a href="https://covid19.mathdro.id/api/daily">currently down</a>
+            </p>
+            <p> The Pie Charts and Line Graph won't render untill it's back up</p>
+            </center>
+            </div>
+        )
+    }
 
     const renderPieChart = (
 
@@ -205,7 +227,7 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country }) => {
                         {renderPieChart}
                         <br />
                         <Typography variant="overline" align="center" component="h2" color="#e0e0e0" gutterBottom>
-                            {country.charAt(0).toUpperCase() + country.slice(1)} has {(deaths.value / totalDeathsToday()).toFixed(4) * 100}% of all of COVID related dealths
+                            {country.charAt(0).toUpperCase() + country.slice(1)} has {(deaths.value / totalDeaths).toFixed(4) * 100}% of all of COVID related dealths
                     </Typography>
                     </Paper>
                 </div>

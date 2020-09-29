@@ -12,6 +12,7 @@ import 'fontsource-roboto';
 function App() {
 
   const [data, setData] = useState({});
+  const [totalDeaths, settotalDeaths] = useState('')
   const [country, setCountry] = useState('');
 
   useEffect(() => {
@@ -20,6 +21,8 @@ function App() {
       const newData = await getData();
       // console.log("data is ", newData)
       setData(newData);
+      settotalDeaths(newData.deaths.value);
+
     }
     retrieveData();
   }, [])
@@ -49,7 +52,7 @@ function App() {
       <br />
       <CardData data={data} />
       <br />
-      <Graph data={data} country={country} />
+      <Graph data={data} country={country} totalDeaths={totalDeaths} />
     </div>
   );
 }
