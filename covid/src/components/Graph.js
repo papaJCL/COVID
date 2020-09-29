@@ -183,8 +183,8 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
                     <Pie
                         data={[
                             { name: 'Deaths', value: deaths.value, fill: '#d88884' },
-                            { name: 'Infected', value: confirmed.value, fill: '#84d4d8' },
-                            { name: 'Recovered ', value: recovered.value, fill: '#84d888' }
+                            { name: 'Reported Infected', value: (confirmed.value-(deaths.value+recovered.value)), fill: '#84d4d8' },
+                            { name: 'Reported Recovered ', value: recovered.value, fill: '#84d888' }
                         ]}
 
                         stroke="none"
