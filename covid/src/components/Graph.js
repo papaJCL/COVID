@@ -49,7 +49,7 @@ const Graph = ({ data: { confirmed, recovered, deaths }, country , totalDeaths }
 
 
             //This fixes the break if a 502 error pops up
-            if (daily.length != 0)
+            if (initialDayData.length != 0)
                 setModifiedDaily(initialDayData);
             
         }
